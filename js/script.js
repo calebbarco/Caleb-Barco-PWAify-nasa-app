@@ -13,6 +13,8 @@ const modalCloseButton = apodModal.querySelector('.modal-close');
 const connectionStatus = document.getElementById('connectionStatus');
 const installPrompt = document.getElementById('installPrompt');
 const installButton = document.getElementById('installButton');
+const notificationStatus = document.getElementById('notificationStatus');
+const requestNotificationButton = document.getElementById('requestNotificationButton');
 
 const apodEndpoint = 'https://science.nasa.gov/wp-json/wp/v2/apod-basic';
 const apodsPerPage = 25;
@@ -43,9 +45,31 @@ function updateConnectionStatus() {
 	connectionStatus.hidden = navigator.onLine;
 }
 
+function updateNotificationStatus(permission) {
+	if (!('Notification' in window)) {
+		notificationStatus.textContent = 'Notifications are not supported in this browser.';
+		requestNotificationButton.hidden = true;
+		return;
+	}
+
+	const currentPermission = permission || Notification.permission;
+	if (currentPermission === 'granted') {
+		notificationStatus.textContent = 'Notification permission is enabled.';
+		requestNotificationButton.hidden = true;
+	} else if (currentPermission === 'denied') {
+		notificationStatus.textContent = 'Notifications are blocked for this site. Change notification permissions in your browser settings.';
+		requestNotificationButton.hidden = true;
+	} else {
+		notificationStatus.textContent = 'Allow notifications from Space Explorer.';
+		requestNotificationButton.hidden = false;
+		requestNotificationButton.disabled = false;
+	}
+}
+
 window.addEventListener('online', updateConnectionStatus);
 window.addEventListener('offline', updateConnectionStatus);
 updateConnectionStatus();
+updateNotificationStatus();
 
 // Call the setupDateInputs function from dateRange.js
 // This sets up the date pickers to:
@@ -198,6 +222,17 @@ async function loadApodImages() {
 }
 
 loadButton.addEventListener('click', loadApodImages);
+requestNotificationButton.addEventListener('click', async () => {
+	requestNotificationButton.disabled = true;
+	try {
+		const permission = await Notification.requestPermission();
+		updateNotificationStatus(permission);
+	} catch (error) {
+		notificationStatus.textContent = 'Unable to request notification permission.';
+		requestNotificationButton.disabled = false;
+	}
+});
+
 modalCloseButton.addEventListener('click', () => apodModal.close());
 apodModal.addEventListener('click', event => {
 	if (event.target === apodModal) {
