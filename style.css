@@ -24,7 +24,10 @@ body {
   font-family: var(--font-body);
   background-color: var(--color-gray-lightest);
   color: var(--color-base);
-  padding: 20px;
+  padding: max(20px, env(safe-area-inset-top))
+    max(20px, env(safe-area-inset-right))
+    max(20px, env(safe-area-inset-bottom))
+    max(20px, env(safe-area-inset-left));
 }
 
 /* Centered container */

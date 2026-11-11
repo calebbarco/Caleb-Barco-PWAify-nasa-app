@@ -2,8 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>NASA Space Explorer</title>
+  <meta name="theme-color" content="#061f4a" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png" />
   <link rel="manifest" href="manifest.json" />
   <link href="style.css" rel="stylesheet" type="text/css" />
 </head>
@@ -20,7 +24,7 @@
     <section id="installPrompt" class="install-prompt" aria-labelledby="installTitle" aria-live="polite" hidden>
       <div>
         <h2 id="installTitle">Install Space Explorer</h2>
-        <p>Keep NASA's space images close at hand.</p>
+        <p id="installInstructions">Keep NASA's space images close at hand.</p>
       </div>
       <button id="installButton" type="button">Install app</button>
     </section>

@@ -17,3 +17,7 @@ You'll get to use your skills to build something that's actually connected to re
 
 
 This is now project 8, PWA-ify the NASA app.
+
+## Install on iPhone
+
+Open the hosted app in Safari, tap **Share**, then choose **Add to Home Screen**. The app must be served from an HTTPS website; downloading or sending an HTML file to an iPhone does not install a working web app.

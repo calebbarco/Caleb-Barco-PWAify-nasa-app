@@ -12,6 +12,7 @@ const modalExplanation = apodModal.querySelector('.modal-explanation');
 const modalCloseButton = apodModal.querySelector('.modal-close');
 const connectionStatus = document.getElementById('connectionStatus');
 const installPrompt = document.getElementById('installPrompt');
+const installInstructions = document.getElementById('installInstructions');
 const installButton = document.getElementById('installButton');
 const notificationStatus = document.getElementById('notificationStatus');
 const requestNotificationButton = document.getElementById('requestNotificationButton');
@@ -241,6 +242,17 @@ apodModal.addEventListener('click', event => {
 });
 
 let deferredInstallPrompt;
+
+const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent)
+	|| (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+const isStandalone = navigator.standalone
+	|| window.matchMedia('(display-mode: standalone)').matches;
+
+if (isIos && !isStandalone) {
+	installInstructions.textContent = 'In Safari, tap Share, then Add to Home Screen. Downloading and sending a file will not install the app on iPhone.';
+	installButton.hidden = true;
+	installPrompt.hidden = false;
+}
 
 window.addEventListener('beforeinstallprompt', event => {
 	event.preventDefault();

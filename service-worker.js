@@ -1,4 +1,4 @@
-const CACHE_NAME = 'space-explorer-v1';
+const CACHE_NAME = 'space-explorer-v2';
 const NASA_API_ORIGIN = 'https://science.nasa.gov';
 const NASA_API_PATH = '/wp-json/wp/v2/apod-basic';
 const APP_SHELL = [
@@ -9,7 +9,8 @@ const APP_SHELL = [
 	'./js/dateRange.js',
 	'./js/script.js',
 	'./img/nasa-worm-logo.png',
-	'./img/space-explorer-icon.svg'
+	'./img/space-explorer-icon.svg',
+	'./img/apple-touch-icon.png'
 ];
 
 // Save the app shell so it can load without a network connection.
