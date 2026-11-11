@@ -8,7 +8,8 @@ const APP_SHELL = [
 	'./style.css',
 	'./js/dateRange.js',
 	'./js/script.js',
-	'./img/nasa-worm-logo.png'
+	'./img/nasa-worm-logo.png',
+	'./img/space-explorer-icon.svg'
 ];
 
 // Save the app shell so it can load without a network connection.
