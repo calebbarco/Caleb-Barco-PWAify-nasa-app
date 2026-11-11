@@ -1,7 +1,7 @@
 // Find our date picker inputs on the page
 const startInput = document.getElementById('startDate');
 const endInput = document.getElementById('endDate');
-const loadButton = document.querySelector('button');
+const loadButton = document.getElementById('loadButton');
 const gallery = document.getElementById('gallery');
 const spaceFact = document.getElementById('spaceFact');
 const apodModal = document.getElementById('apodModal');
@@ -11,6 +11,8 @@ const modalDate = apodModal.querySelector('.modal-date');
 const modalExplanation = apodModal.querySelector('.modal-explanation');
 const modalCloseButton = apodModal.querySelector('.modal-close');
 const connectionStatus = document.getElementById('connectionStatus');
+const installPrompt = document.getElementById('installPrompt');
+const installButton = document.getElementById('installButton');
 
 const apodEndpoint = 'https://science.nasa.gov/wp-json/wp/v2/apod-basic';
 const apodsPerPage = 25;
@@ -201,6 +203,30 @@ apodModal.addEventListener('click', event => {
 	if (event.target === apodModal) {
 		apodModal.close();
 	}
+});
+
+let deferredInstallPrompt;
+
+window.addEventListener('beforeinstallprompt', event => {
+	event.preventDefault();
+	deferredInstallPrompt = event;
+	installPrompt.hidden = false;
+});
+
+installButton.addEventListener('click', async () => {
+	if (!deferredInstallPrompt) {
+		return;
+	}
+
+	deferredInstallPrompt.prompt();
+	await deferredInstallPrompt.userChoice;
+	deferredInstallPrompt = null;
+	installPrompt.hidden = true;
+});
+
+window.addEventListener('appinstalled', () => {
+	deferredInstallPrompt = null;
+	installPrompt.hidden = true;
 });
 
 if ('serviceWorker' in navigator) {

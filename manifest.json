@@ -2,5 +2,15 @@
   "name": "NASA Space Explorer",
   "short_name": "Space Explorer",
   "start_url": "./",
-  "display": "standalone"
+  "display": "standalone",
+  "theme_color": "#061f4a",
+  "background_color": "#061f4a",
+  "icons": [
+    {
+      "src": "img/space-explorer-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
 }

@@ -56,6 +56,49 @@ body {
   margin-bottom: 20px;
 }
 
+.install-prompt {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+  padding: 16px 20px;
+  border-left: 5px solid var(--color-primary);
+  background-color: var(--color-white);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.install-prompt h2 {
+  color: var(--color-primary-darker);
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+}
+
+.install-prompt p {
+  margin-top: 4px;
+  line-height: 1.5;
+}
+
+.install-prompt button {
+  flex: 0 0 auto;
+  width: auto;
+}
+
+.install-prompt[hidden] {
+  display: none;
+}
+
+@media (max-width: 599px) {
+  .install-prompt {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .install-prompt button {
+    width: 100%;
+  }
+}
+
 h1 {
   font-family: var(--font-heading);
   font-weight: bold;
