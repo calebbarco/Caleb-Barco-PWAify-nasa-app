@@ -33,6 +33,19 @@ body {
   margin: 0 auto;
 }
 
+/* Offline status */
+.connection-status {
+  margin-bottom: 16px;
+  padding: 12px 16px;
+  border-left: 4px solid #b54708;
+  background-color: #fff4e5;
+  color: #5f370e;
+}
+
+.connection-status[hidden] {
+  display: none;
+}
+
 /* Header */
 .site-header {
   display: flex;

@@ -10,6 +10,7 @@ const modalTitle = apodModal.querySelector('#modalTitle');
 const modalDate = apodModal.querySelector('.modal-date');
 const modalExplanation = apodModal.querySelector('.modal-explanation');
 const modalCloseButton = apodModal.querySelector('.modal-close');
+const connectionStatus = document.getElementById('connectionStatus');
 
 const apodEndpoint = 'https://science.nasa.gov/wp-json/wp/v2/apod-basic';
 const apodsPerPage = 25;
@@ -35,6 +36,14 @@ function showNewSpaceFact() {
 
 	spaceFact.textContent = spaceFacts[currentSpaceFactIndex];
 }
+
+function updateConnectionStatus() {
+	connectionStatus.hidden = navigator.onLine;
+}
+
+window.addEventListener('online', updateConnectionStatus);
+window.addEventListener('offline', updateConnectionStatus);
+updateConnectionStatus();
 
 // Call the setupDateInputs function from dateRange.js
 // This sets up the date pickers to:

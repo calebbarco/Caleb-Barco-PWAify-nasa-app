@@ -1,4 +1,6 @@
 const CACHE_NAME = 'space-explorer-v1';
+const NASA_API_ORIGIN = 'https://science.nasa.gov';
+const NASA_API_PATH = '/wp-json/wp/v2/apod-basic';
 const APP_SHELL = [
 	'./',
 	'./index.html',
@@ -31,9 +33,41 @@ self.addEventListener('activate', event => {
 	);
 });
 
-// Use cached local files first and leave external API requests alone.
+// Fetch NASA data first, then use its cached response when the network is unavailable.
 self.addEventListener('fetch', event => {
-	if (event.request.method !== 'GET' || new URL(event.request.url).origin !== self.location.origin) {
+	if (event.request.method !== 'GET') {
+		return;
+	}
+
+	const requestUrl = new URL(event.request.url);
+	if (requestUrl.origin === NASA_API_ORIGIN && requestUrl.pathname === NASA_API_PATH) {
+		event.respondWith((async () => {
+			let response;
+			try {
+				response = await fetch(event.request);
+			} catch (error) {
+				const cachedResponse = await caches.match(event.request);
+				if (cachedResponse) {
+					return cachedResponse;
+				}
+				throw error;
+			}
+
+			if (response.ok) {
+				try {
+					const cache = await caches.open(CACHE_NAME);
+					await cache.put(event.request, response.clone());
+				} catch (error) {
+					console.error('Unable to cache NASA response:', error);
+				}
+			}
+
+			return response;
+		})());
+		return;
+	}
+
+	if (requestUrl.origin !== self.location.origin) {
 		return;
 	}
 
